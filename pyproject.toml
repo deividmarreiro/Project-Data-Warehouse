@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "data-warehouse-project-template"
+version = "0.1.0"
+description = ""
+authors = ["Deivid Marreiro <davidteixeiro@gmail.com>"]
+readme = "README.md"
+packages = [{include = "data_warehouse_project_template"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+boto3 = "^1.26.67"
+psycopg2-binary = "^2.9.5"
+pandas = "1.5.1"
+sqlalchemy = "^2.0.3"
+awswrangler = "^2.19.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
