@@ -41,6 +41,7 @@ You have two ways to run the project
 
 - 1. Using the Terraform to configurate all you need in the AWS
 - 2. Configure manually on the AWS Console and set the local variables
+- 3. Copy the local_dwh.cfg and save as dwh.cfg
 
 But first of all you need to:
 - Create the IAM User in the AWS Console.
@@ -83,7 +84,7 @@ But first of all you need to:
 
 - Use access key and secret key to create clients for IAM and Redshift.
 - Create an IAM Role that makes Redshift able to access S3 bucket (ReadOnly)
-- Create a RedShift Cluster and get the DWH_ENDPOINT(Host address) and DWH_ROLE_ARN and fill the config file.
+- Create a RedShift Cluster and get the DWH_ENDPOINT(Host address) and DWH_ROLE_ARN and fill the config file with the same information in the local_dwh.cfg.
 
 - Update the dwh.cfg with the needed information.
 
