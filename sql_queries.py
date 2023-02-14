@@ -59,8 +59,8 @@ staging_songs_table_create = ("""
 songplay_table_create = ("""
     CREATE TABLE IF NOT EXISTS fact_songplay (
         songplay_id INTEGER IDENTITY(0, 1),
-        start_time TIMESTAMP,
-        user_id TEXT,
+        start_time TIMESTAMP NOT NULL,
+        user_id TEXT NOT NULL,
         level TEXT,
         song_id VARCHAR(512),
         artist_id VARCHAR(512),
@@ -84,7 +84,7 @@ user_table_create = ("""
 
 song_table_create = ("""
     CREATE TABLE IF NOT EXISTS dim_song (
-        song_id VARCHAR(512),
+        song_id VARCHAR(512) NOT NULL,
         title VARCHAR(512)
         artist_id VARCHAR(512),
         year SMALLINT,
@@ -95,7 +95,7 @@ song_table_create = ("""
 
 artist_table_create = ("""
     CREATE TABLE IF NOT EXISTS dim_artist (
-        artist_id VARCHAR(512),
+        artist_id VARCHAR(512) NOT NULL,
         name VARCHAR(512),
         location TEXT,
         latitude DOUBLE PRECISION,
@@ -160,7 +160,7 @@ songplay_table_insert = ("""
 
 user_table_insert = ("""
     INSERT INTO dim_user (user_id, first_name, last_name, gender, level)
-    SELECT
+    SELECT DISTINCT
         user_id,
         firstname as first_name,
         lastname as last_name,
@@ -172,18 +172,19 @@ user_table_insert = ("""
 
 song_table_insert = ("""
     INSERT INTO dim_song (song_id, title, artist_id, year, duration)
-    SELECT
+    SELECT DISTINCT
         song_id,
         title,
         artist_id,
         year,
         duration
     FROM stage_songs
+    WHERE song_id IS NOT NULL
 """)
 
 artist_table_insert = ("""
     INSERT INTO dim_artist (artist_id, name, location, latitude, longitude)
-    SELECT
+    SELECT DISTINCT
         artist_id,
         artist_name as name,
         artist_location as location,
@@ -195,7 +196,7 @@ artist_table_insert = ("""
 
 time_table_insert = ("""
     INSERT INTO dim_time (start_time, hour, day, week, month, year, weekDay)
-    SELECT start_time, 
+    SELECT DISTINCT start_time, 
         extract(hour from start_time),
         extract(day from start_time),
         extract(week from start_time), 
